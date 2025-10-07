@@ -2,7 +2,7 @@ using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using RabbitMQ.Client;
 
-namespace Api.Controllers
+namespace Producer.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -13,7 +13,7 @@ namespace Api.Controllers
         private const string ExchangeName = "exchange_1";
         
         [HttpPost]
-        public async Task<IActionResult> Post()
+        public async Task<IActionResult> Post([FromBody] string message)
         {
             // Declare connection and channel
             var factory = new ConnectionFactory
@@ -27,17 +27,8 @@ namespace Api.Controllers
             
             // Declare exchange, queue
             await channel.ExchangeDeclareAsync(ExchangeName,  ExchangeType.Direct);
-            
-            
-            
-            await channel.QueueDeclareAsync(
-                queue: QueueName,
-                durable: false,
-                exclusive: false,
-                autoDelete: false,
-                arguments: null
-            );
-            const string message = "Hello World!";
+            await channel.QueueDeclareAsync(QueueName, false, false, false, null);
+            await channel.QueueBindAsync(QueueName, ExchangeName, RoutingKey, null);
             var body = Encoding.UTF8.GetBytes(message);
             await channel.BasicPublishAsync(
                 exchange: ExchangeName,
@@ -45,6 +36,7 @@ namespace Api.Controllers
                 body: body
             );
             Console.WriteLine($"Sent {message}");
+            await channel.CloseAsync();
             
             return Ok();
         }
