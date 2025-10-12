@@ -1,6 +1,7 @@
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using RabbitMQ.Client;
+using Constants = Shared.Common.Constants;
 
 namespace Producer.Controllers
 {
@@ -18,9 +19,9 @@ namespace Producer.Controllers
             // Declare connection and channel
             var factory = new ConnectionFactory
             {
-                HostName = Shared.Constants.RabbitMqHost,
-                UserName = Shared.Constants.RabbitMqUserName,
-                Password = Shared.Constants.RabbitMqPassword
+                HostName = Constants.RabbitMqHost,
+                UserName = Constants.RabbitMqUserName,
+                Password = Constants.RabbitMqPassword
             };
             var connection = await factory.CreateConnectionAsync();
             var channel = await connection.CreateChannelAsync();

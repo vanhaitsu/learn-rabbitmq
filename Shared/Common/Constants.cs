@@ -1,4 +1,4 @@
-namespace Shared;
+namespace Shared.Common;
 
 public static class Constants
 {
@@ -6,8 +6,8 @@ public static class Constants
 
     // Connection
     public const string RabbitMqHost = "localhost";
-    public const string RabbitMqUserName = "dangvanhai";
-    public const string RabbitMqPassword = "Omni@12345";
+    public const string RabbitMqUserName = "";
+    public const string RabbitMqPassword = "";
     
     #endregion
 }
