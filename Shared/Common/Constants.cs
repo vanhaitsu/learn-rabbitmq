@@ -5,9 +5,9 @@ public static class Constants
     #region RabbitMQ
 
     // Connection
-    public const string RabbitMqHost = "localhost";
-    public const string RabbitMqUserName = "";
-    public const string RabbitMqPassword = "";
-    
+    public const string RabbitMqHostPath = "RabbitMq:Host";
+    public const string RabbitMqUsernamePath = "RabbitMq:Username";
+    public const string RabbitMqPasswordPath = "RabbitMq:Password";
+
     #endregion
 }
