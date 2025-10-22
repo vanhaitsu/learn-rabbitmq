@@ -58,7 +58,7 @@ public class RabbitMqService : IRabbitMqService
          * Recommendation:
          * Declare exchanges during app initialization or once per channel reuse.
          */
-        await channel.ExchangeDeclareAsync(exchangeName, ExchangeType.Direct, false);
+        await channel.ExchangeDeclareAsync(exchangeName, ExchangeType.Direct);
         await channel.QueueDeclareAsync(queueName, true, false, false);
         await channel.QueueBindAsync(queueName, exchangeName, routingKey);
         var messageString = JsonSerializer.Serialize(message);
