@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Producer", "Producer\Producer.csproj", "{5EC0A2E0-77FB-4E3D-9326-2A338AA08752}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LetterService", "LetterService\LetterService.csproj", "{8F60FA15-AE55-4FFF-A107-4C4C5D50DDE4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{5EC0A2E0-77FB-4E3D-9326-2A338AA08752}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5EC0A2E0-77FB-4E3D-9326-2A338AA08752}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5EC0A2E0-77FB-4E3D-9326-2A338AA08752}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F60FA15-AE55-4FFF-A107-4C4C5D50DDE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F60FA15-AE55-4FFF-A107-4C4C5D50DDE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F60FA15-AE55-4FFF-A107-4C4C5D50DDE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F60FA15-AE55-4FFF-A107-4C4C5D50DDE4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

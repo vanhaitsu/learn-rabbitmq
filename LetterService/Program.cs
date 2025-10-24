@@ -1,5 +1,6 @@
+using RabbitMQ.Client;
 using Shared;
-using Shared.Consumers;
+using Shared.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,7 +10,7 @@ builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 builder.Services.AddSharedServices(builder.Configuration,
-    configureConsumers: x => { x.AddConsumer<LetterConsumer>(); });
+    configureBus: (cfg, context) => { cfg.Publish<Letter>(m => { m.ExchangeType = ExchangeType.Direct; }); });
 
 var app = builder.Build();
 

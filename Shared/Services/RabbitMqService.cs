@@ -1,7 +1,9 @@
 using System.Text;
 using System.Text.Json;
+using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
 using Shared.Interfaces;
+using Shared.Utils;
 
 namespace Shared.Services;
 
@@ -18,6 +20,12 @@ public class RabbitMqService : IRabbitMqService
      */
     private IConnection? _connection;
     private ConnectionFactory? _factory;
+    private readonly ILogger<RabbitMqService> _logger;
+
+    public RabbitMqService(ILogger<RabbitMqService> logger)
+    {
+        _logger = logger;
+    }
 
     public async Task InitializeAsync(string host, string username, string password)
     {
@@ -64,7 +72,7 @@ public class RabbitMqService : IRabbitMqService
         var messageString = JsonSerializer.Serialize(message);
         var body = Encoding.UTF8.GetBytes(messageString);
         await channel.BasicPublishAsync(exchangeName, routingKey, body);
-        Console.WriteLine($"Message sent at {DateTime.Now}. Content: {messageString}");
+        _logger.LogInformation(StringTools.GenerateSuccessMessage(messageString));
     }
 
     public async ValueTask DisposeAsync()

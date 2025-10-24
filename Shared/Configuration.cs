@@ -1,22 +1,24 @@
 using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Shared.Common;
-using Shared.Consumers;
 using Shared.Interfaces;
 using Shared.Services;
+using Constants = Shared.Common.Constants;
 
 namespace Shared;
 
-public static class DependencyInjection
+public static class Configuration
 {
-    public static IServiceCollection AddSharedServices(this IServiceCollection services,
-        ConfigurationManager configuration)
+    public static IServiceCollection AddSharedServices(
+        this IServiceCollection services,
+        ConfigurationManager configuration,
+        Action<IBusRegistrationConfigurator>? configureConsumers = null,
+        Action<IRabbitMqBusFactoryConfigurator, IBusRegistrationContext>? configureBus = null)
     {
+        services.AddSwaggerGen();
         services.AddMassTransit(x =>
         {
-            // Apply kebab-case naming convention to endpoints
-            x.SetKebabCaseEndpointNameFormatter();
+            x.SetKebabCaseEndpointNameFormatter(); // Apply kebab-case naming convention to endpoints
 
             // Use RabbitMQ as transport
             x.UsingRabbitMq((context, cfg) =>
@@ -27,14 +29,18 @@ public static class DependencyInjection
                     h.Password(configuration[Constants.RabbitMqPasswordPath] ?? throw new ArgumentNullException());
                 });
 
-                // Automatically configure endpoints for consumers
-                cfg.ConfigureEndpoints(context);
+                cfg.ConfigureEndpoints(context); // Automatically configure endpoints for consumers
+                configureBus?.Invoke(cfg, context);
             });
 
-            x.AddConsumer<MessageConsumer>();
+            configureConsumers?.Invoke(x);
         });
 
+        # region Dependency Injection
+
         services.AddSingleton<IRabbitMqService, RabbitMqService>();
+
+        #endregion
 
         return services;
     }
